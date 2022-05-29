@@ -6,3 +6,6 @@ secret.tfvars
 *.terraform.lock.hd
 *.terraform.tstate.backup
 *.terraform.tstate
+
+terraform.tfstate
+terraform.tfstate.backup
