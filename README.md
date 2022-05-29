@@ -1,4 +1,4 @@
-# Ubuntu and apache2 instance on aws wth terraform
+# Ubuntu and apache2 instance on aws with terraform
 
 ## Steps
 
@@ -15,7 +15,7 @@
 ## Initial and prerequisite
 
 - Setup aws cloud account
-- Get access key and credentials
+- Get access key and secret key credentials
 
 ## Setup instance
 
