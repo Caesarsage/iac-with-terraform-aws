@@ -1,7 +1,7 @@
 provider "aws" {
-  region     = var.aws_profile[0].region
-  access_key = var.aws_profile[0].access_key
-  secret_key = var.aws_profile[0].secret_key
+  region     = var.aws_profile[0]
+  access_key = var.aws_profile[1]
+  secret_key = var.aws_profile[2]
 }
 
 variable "aws_profile" {
@@ -12,9 +12,6 @@ variable "aws_resource_profile" {
   description = "AWS resource profile"
 }
 
-variable "aws_security_group" {
-  description = "AWS security group"
-} 
 
 variable "subnet_profile" {
   description = "cidr block  and name for profile" 
@@ -86,32 +83,34 @@ resource "aws_security_group" "allow-web-security-group" {
   vpc_id = aws_vpc.production-vpc.id
   description = "Allow web inbound traffic"
   name = "allows_web_traffic"
-  ingress {
-    description = var.aws_security_group[0].description
-    from_port   = var.aws_security_group[0].from_port
-    to_port     = var.aws_security_group[0].to_port
-    protocol    = var.aws_security_group[0].protocol
-    cidr_blocks = var.aws_security_group[0].cidr_blocks
-  }
-  ingress {
-    description = var.aws_security_group[1].description
-    from_port   = var.aws_security_group[1].from_port
-    to_port     = var.aws_security_group[1].to_port
-    protocol    = var.aws_security_group[1].protocol
-    cidr_blocks = var.aws_security_group[1].cidr_blocks
-  }
-  ingress {
-    description = var.aws_security_group[2].description
-    from_port   = var.aws_security_group[2].from_port
-    to_port     = var.aws_security_group[2].to_port
-    protocol    = var.aws_security_group[2].protocol
-    cidr_blocks = var.aws_security_group[2].cidr_blocks
-  }
-  egress {
-    from_port   = var.aws_security_group[3].from_port
-    to_port     = var.aws_security_group[3].to_port
-    protocol    = var.aws_security_group[3].protocol
-    cidr_blocks = var.aws_security_group[3].cidr_blocks
+  ingress = { 
+    description = "HTTPS"
+    from_port   = 443,
+    to_port     = 443,
+    protocol    = "tcp",
+    cidr_blocks = ["0.0.0.0/0"]
+  },
+  ingress = {
+    description = "HTTP",
+    from_port   = 80,
+    to_port     = 80,
+    protocol    = "tcp",
+    cidr_blocks = ["0.0.0.0/0"] 
+  },
+
+  ingress = {
+    description = "SSH",
+    from_port   = 22,
+    to_port     = 22,
+    protocol    = "tcp",
+    cidr_blocks = ["0.0.0.0/0"] # allow for all
+  },
+
+  egress = {
+    from_port   = 0,
+    to_port     = 0,
+    protocol    = "-1", # -1 is a special protocol that means all protocols
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
