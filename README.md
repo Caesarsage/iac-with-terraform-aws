@@ -7,7 +7,7 @@
 - Create custom route table
 - Create a subnet
 - Associate subnet with route table
-- Create Securtiy Group to allow port 22, 80, 443
+- Create Security Group to allow port 22, 80, 443
 - Create a network interface with an IP in the subnet that was created in step 4
 - Assign an elastic ip to the the network interface created in 7
 - Create Ubuntu and Install apache
@@ -16,14 +16,14 @@
 
 - Setup aws cloud account
 - Get access key and secret key credentials
-
-## Setup instance
+## Setup and run instance
 
 Set up terraform environment
 
 ```
 terraform init
-terraform apply -var-file variable.tfvars
+terraform plan -var-file secret.tfvars
+terraform apply -var-file secret.tfvars
 ```
 
 ### View EC2 instance created in your aws account
@@ -40,5 +40,5 @@ terraform apply -var-file variable.tfvars
 ## Clean up : Destroy instance
 
 ```
-  terraform destroy -var-file variable.tfvars
+  terraform destroy -var-file secret.tfvars
 ```
